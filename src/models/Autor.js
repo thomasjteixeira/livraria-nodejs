@@ -8,7 +8,7 @@ const autorSchema = new mongoose.Schema(
     },
 
     {
-        verionKey: false
+        versionKey: false
     }
 );
 

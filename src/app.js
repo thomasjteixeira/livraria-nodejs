@@ -26,11 +26,31 @@ app.get('/livros', (req, res) => {
     })
 });
 
+//listar livro por editora
+app.get('/livros/busca', (req, res) =>{
+    const editora = req.query.editora;
+
+
+    livros.find({'editora': editora})
+    .populate('autor', 'nome') 
+    .exec((err, livros) => {
+        if(err){
+            res.status(400).send({message: `${err.message} - Id do livro não localizado`});
+        }else{
+            res.status(200).send(livros);
+        }
+    })
+    
+});
+
+
 //listar um livro
 app.get('/livros/:id', (req, res) =>{
     const id = req.params.id;
 
-    livros.findById(id, (err, livros) => {
+    livros.findById(id)
+    .populate('autor', 'nome') 
+    .exec((err, livros) => {
         if(err){
             res.status(400).send({message: `${err.message} - Id do livro não localizado`});
         }else{
